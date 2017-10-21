@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Map</title>
+	<meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 50%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+</head>
+<body>
+<div id = "map"></div>
+<input type="text" name = "lat" id = "lat" value="-34.397"><br>
+<input type="text" name = "lng" id = "lng" value="150.644"><br>
+<input type = "submit" id = "submit">
+<script>
+function initMap(){
+      var sydney = {lat: -34.397, lng: 150.644};
+   
+      var map = new google.maps.Map(document.getElementById('map'),{ center: sydney,
+          zoom: 8});
+      var flightPathCoordinates = [];
+  
+     document.getElementById("submit").addEventListener('click', function(){
+        displayWayPoint(flightPathCoordinates,map);
+      });
+
+  }
+
+  function displayWayPoint(flightPathCoordinates,map){
+      var mylat = document.getElementById('lat');
+      var mylng = document.getElementById('lng');
+      flightPathCoordinates.push({
+        lat: Number(mylat.value),
+        lng: Number(mylng.value)
+      }); 
+      console.log(flightPathCoordinates);
+      var flightPath = new google.maps.Polyline({
+            path: flightPathCoordinates,
+            geodesic: true,
+            strokeColor: '#FFFFFF',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });  
+      flightPath.setMap(map); 
+      }
+
+      
+
+
+</script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJLQqtu9F6BYypqplhpDDEvTnCu8xMUU4&callback=initMap"
+    async defer></script>
+</body>
+</html>
