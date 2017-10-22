@@ -1,3 +1,7 @@
+<!-- 
+-Add labels to waypoints 
+-Make waypoints draggable. Changes to the location should be reflected in table 
+ -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +20,27 @@
         margin: 0;
         padding: 0;
       }
+
+      table, td, th {    
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 50%;
+      }
+
+      th, td {
+        padding: 5px;
+      }
+
     </style>
 </head>
 <body>
 <div id = "map"></div>
-<input type="text" name = "lat" id = "lat" value="-34.397"><br>
+<table id = "places"><th>Lat</th><th>Lng</th></table>
+<input type="text" name = "lat" id = "lat" value="-34.397">
 <input type="text" name = "lng" id = "lng" value="150.644"><br>
 <input type = "submit" id = "submit">
 <script>
@@ -38,12 +58,17 @@ function initMap(){
   }
 
   function displayWayPoint(flightPathCoordinates,map){
-      var mylat = document.getElementById('lat');
-      var mylng = document.getElementById('lng');
+      var mylat = document.getElementById('lat').value;
+      var mylng = document.getElementById('lng').value;
       flightPathCoordinates.push({
-        lat: Number(mylat.value),
-        lng: Number(mylng.value)
+        lat: Number(mylat),
+        lng: Number(mylng)
       }); 
+      var my_table = document.getElementById('places');
+      var row = my_table.insertRow(-1);
+      console.log(mylat);
+      row.insertCell(-1).innerHTML = mylat;
+      row.insertCell(-1).innerHTML = mylng;
       console.log(flightPathCoordinates);
       var flightPath = new google.maps.Polyline({
             path: flightPathCoordinates,
